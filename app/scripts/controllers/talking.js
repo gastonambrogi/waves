@@ -23,7 +23,7 @@ angular.module('wavesApp')
     }
 
     $rootScope.$on("speech:result", function(e, result){
-      console.info("speech:result", result)
+      // console.info("speech:result", $scope.speechResult, result)
       $scope.speechResult.isInterim = !result.final;
       $scope.speechResult.result = result.text;
 

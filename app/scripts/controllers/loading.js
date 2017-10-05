@@ -14,7 +14,7 @@ angular.module('wavesApp')
       if($stateParams.text){
         var match=keywordHelper.findMatch($stateParams.text);
         if(match.length>0){
-          InflectionsAPIService.sendRecognition(match[0]).then(ResponseRedirectorService.redirect);
+          InflectionsAPIService.sendRecognition(match[0]).then(ResponseRedirectorService.redirect, ResponseRedirectorService.onFail);
         }else{
           $state.go('active_screen');  
         }
