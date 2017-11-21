@@ -22,6 +22,6 @@ angular.module('wavesApp')
           $state.go(response.attributes.query_words[0].toLowerCase(), {response: response});
         }
       },
-      onFail: (response) => $state.go('active_screen')
+      onFail: function(response) {$state.go('active_screen')}
     };
   }]);

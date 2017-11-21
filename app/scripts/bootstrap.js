@@ -8,13 +8,13 @@ angular
     var responseTimeout = null;
 
     annyang.addCommands({
-      'inicio': () => $state.go('active_screen'),
+      'inicio': function() {$state.go('active_screen')},
       ':command': {
         'regexp': /^(noticias|clima|farmacias)$/,
-        'callback': (command) => {
+        'callback': function (command) {
           // if(!$state.is('talking')) $state.go('talking');
           // $timeout(()=>{$rootScope.$emit("speech:result", {text: command, final: true})}, 10); 
-          $state.go('talking').then(()=> $timeout(()=>{$rootScope.$emit("speech:result", {text: command, final: true})}, 10));
+          $state.go('talking').then(function () {$timeout(function() {$rootScope.$emit("speech:result", {text: command, final: true})}, 10)});
         }
       },
             // '*allSpeech': function(allSpeech){
@@ -46,31 +46,31 @@ angular
       if(!$state.is('talking')) $state.go('talking');
       
 
-      $timeout(() => $rootScope.$emit("speech:result", {text: userSaid[0], final: false}), 10);
+      $timeout(function() {$rootScope.$emit("speech:result", {text: userSaid[0], final: false}), 10});
     });
     annyang.addCallback('resultMatch', function(userSaid/*, commandText, phrases*/) {
       // console.info('ANNYANG:final-result', userSaid);
       // $rootScope.$emit("speech:result", {text: userSaid, final: true});
     });
 
-    annyang.addCallback('error', function(e) {
-      if(e.error !== 'no-speech'){
-        console.error("ANNYANG:error", e);
-        $state.go('boot');
-      }
-    });
-    annyang.addCallback('errorNetwork', function(e) {
-      console.error("ANNYANG:errorNetwork", e);
-      $state.go('boot');
-    });
-    annyang.addCallback('errorPermissionBlocked', function(e) {
-      console.error("ANNYANG:errorPermissionBlocked", e);
-      $state.go('boot');
-    });
-    annyang.addCallback('errorPermissionDenied', function(e) {
-      console.error("ANNYANG:errorPermissionDenied", e);
-      $state.go('boot');
-    });
+    // annyang.addCallback('error', function(e) {
+    //   if(e.error !== 'no-speech'){
+    //     console.error("ANNYANG:error", e);
+    //     $state.go('boot');
+    //   }
+    // });
+    // annyang.addCallback('errorNetwork', function(e) {
+    //   console.error("ANNYANG:errorNetwork", e);
+    //   $state.go('boot');
+    // });
+    // annyang.addCallback('errorPermissionBlocked', function(e) {
+    //   console.error("ANNYANG:errorPermissionBlocked", e);
+    //   $state.go('boot');
+    // });
+    // annyang.addCallback('errorPermissionDenied', function(e) {
+    //   console.error("ANNYANG:errorPermissionDenied", e);
+    //   $state.go('boot');
+    // });
 
     annyang.debug(true);
     
