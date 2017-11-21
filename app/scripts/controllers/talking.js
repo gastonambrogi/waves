@@ -23,21 +23,31 @@ angular.module('wavesApp')
     }
 
     $rootScope.$on("speech:result", function(e, result){
-      // console.info("speech:result", $scope.speechResult, result)
-      $scope.speechResult.isInterim = !result.final;
-      $scope.speechResult.result = result.text;
-
-      // stopRecognitionAndSend(result.text);
-      if($scope.speechResult.isInterim){      
-        if(result.final){
-          stopRecognitionAndSend(result.text);
-        }else{
-          lastWasInterimTimeout = lastWasInterimTimeout || 
-            $timeout(function(text){
-              $scope.speechResult.isInterim=false;
-              stopRecognitionAndSend(text);
-            }, 3000, true, result.text);
+      if ($state.is('talking')) {
+        $scope.speechResult.isInterim = !result.final;
+        $scope.speechResult.result = result.text;
+  
+        // stopRecognitionAndSend(result.text);
+        if($scope.speechResult.isInterim){
+          if(result.final){
+            stopRecognitionAndSend(result.text);
+          }else{
+            lastWasInterimTimeout = lastWasInterimTimeout || 
+              $timeout(function(text){
+                $scope.speechResult.isInterim=false;
+                stopRecognitionAndSend(text);
+              }, 3000, true, result.text);
+          }
+        }else {
+          if (result.final) {
+            stopRecognitionAndSend(result.text);
+          }else {
+            console.warn("INVALID CASE")
+            $state.go('active_screen');
+          }
         }
+      } else {
+        $state.go('active_screen');
       }
     });
   }]);

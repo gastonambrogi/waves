@@ -17,10 +17,10 @@ angular
           $state.go('talking').then(()=> $timeout(()=>{$rootScope.$emit("speech:result", {text: command, final: true})}, 10));
         }
       },
-      '*allSpeech': function(allSpeech){       
-        if(!$state.is('talking')) $state.go('talking');
-        $rootScope.$emit("speech:result", {text: allSpeech, final: true});
-      }
+            // '*allSpeech': function(allSpeech){
+            //   if(!$state.is('talking')) $state.go('talking');
+            //   $rootScope.$emit("speech:result", {text: allSpeech, final: true});
+            // }
 // 'noticias':   () => { 
 //   if(!$state.is('talking')) $state.go('talking');
 //   setTimeout(()=>{$rootScope.$emit("speech:result", {text: 'noticias', final: true})}, 0); 
